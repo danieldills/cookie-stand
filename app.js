@@ -1,6 +1,6 @@
 'use strict';
 
-let timeSlots = ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm',];
+let timeSlots = ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm','Daily Location Totals'];
 
 function randomInRange(min, max) {
     let range = max - min;
@@ -42,60 +42,72 @@ CookieStand.prototype.calcCookiesEachHour = function() {
     let cookiesEachHour = customersPerHour * this.avgCookiesPerSale;
     // console.log(Math.ceil(cookiesEachHour));
     return Math.ceil(cookiesEachHour);
-}
+};
 
-// simCookieSales
+// simulateCookieSales
 CookieStand.prototype.simulateCookieSales = function() {
-for (let i = 0; i < timeSlots.length; i++) {
+for (let i = 0; i < timeSlots.length -1; i++) {
     let certainCookie = this.calcCookiesEachHour();
     this.cookieSales.push(certainCookie);
     this.storeTotal+= certainCookie;
 }
 this.cookieSales.push(this.storeTotal);
-
-}
-
+};
+// render
 CookieStand.prototype.render = function() {
-    let ulElem = document.getElementById(this.id);
-    for (let i = 0; i < timeSlots.length; i++) {
-        let liElem = document.createElement('li');
-        liElem.textContent = timeSlots[i] + ' : ' + this.cookieSales[i] + ' cookies';
-        ulElem.appendChild(liElem);
+    const salesRow = document.createElement('tr');
+    const tableElem = document.getElementById('table');
+    tableElem.appendChild(salesRow);
+    const tableCell = document.createElement('td');
+    salesRow.appendChild(tableCell);
+    tableCell.textContent = this.location;
+    for (let i = 0; i < this.cookieSales.length; i++) {
+        const cookiesElem = document.createElement('td');
+        cookiesElem.textContent = this.cookieSales[i];
+        salesRow.appendChild(cookiesElem);
     }
-    let liElem = document.createElement('li');
-    liElem.textContent = 'Total' + ' : ' + this.storeTotal + ' cookies';
-    ulElem.appendChild(liElem);
-    console.log(Math.ceil(this.avgCookiesPerSale));
+};
+
+function renderHeaderRow() {
+    const tableElem = document.getElementById('table');
+    const rowOne = document.createElement('tr');
+    tableElem.appendChild(rowOne);
+    const emptyTh = document.createElement('th');
+    rowOne.appendChild(emptyTh);
+    for (let i = 0; i < timeSlots.length; i++) {
+        const timeHeaderElem = document.createElement('th');
+        timeHeaderElem.textContent = timeSlots[i];
+        rowOne.appendChild(timeHeaderElem);
+        timeHeaderElem.setAttribute('scope', 'col');
+    }
+};
+
+function renderFooterRow () {
+    const tableElem = document.getElementById('table');
+    const tableFootElem = document.createElement('tr');
+    tableElem.appendChild(tableFootElem);
+
+    const totalCookiesElem = document.createElement('th');
+    totalCookiesElem.setAttribute('scope', 'row');
+    totalCookiesElem.textContent = 'Totals';
+    tableFootElem.append(totalCookiesElem);
+
+for (let i = 0; i < timeSlots.length; i++) {
+    let cookieTotalHour = 0;
+    for (let j = 0; j < allStands.length; j++) {
+    cookieTotalHour += allStands[j].cookieSales[i]
+    }
+    const cookieTd = document.createElement('td');
+    cookieTd.textContent = cookieTotalHour;
+    tableFootElem.appendChild(cookieTd);
+} 
 }
+renderHeaderRow();
+
+// Done with all total
 for (let i = 0; i < allStands.length; i++) {
     allStands[i].calcCookiesEachHour();
     allStands[i].simulateCookieSales();
     allStands[i].render();
-}
-
-let tableElem = document.getElementById('table');
-const row1 = document.createElement('th')
-
-for (let i = 0; i < timeSlots.length; i++) {
-    tableElem.appendChild(row1);
-    const timeElem = document.createElement('th');
-    timeElem.textContent = timeSlots[i];
-    row1.appendChild(timeElem);
-}
-
-
-// let tableElem = document.getElementById('table');
-
-// const row1 = document.createElement('tr');
-// const row2 = document.createElement('tr');
-
-// tableElem.appendChild(row1);
-// tableElem.appendChild(row2);
-
-// const sixElem = document.createElement('th');
-// row1.appendChild(sixElem);
-// sixElem.textContent = '6:00am';
-
-// const sixDataElem = document.createElement('td');
-// row2.appendChild(sixDataElem);
-// sixDataElem.textContent = 'Cookie sales';
+};
+renderFooterRow();
