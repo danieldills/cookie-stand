@@ -1,3 +1,24 @@
+.index {
+  background-color:rgb(241, 170, 170);
+}
+
+.salmon {
+  text-align: center;
+}
+
+.pat {
+  text-align: center;
+  font-size: 90px;
+}
+
+.family {
+  text-align: center;
+}
+.title {
+  font-size: 50px;
+  text-align: center;
+}
+
 table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -20,3 +41,6 @@ table {
     background-color: salmon;
     color: white;
   }
+
+
+
