@@ -42,5 +42,6 @@ table {
     color: white;
   }
 
-
-
+section {
+  margin-top: 15px;
+}

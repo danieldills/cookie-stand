@@ -9,13 +9,13 @@ function randomInRange(min, max) {
     return Math.floor(Math.random() * (range + 1)) + min;
 }
 
-function CookieStand(id, location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPerSale, cookieSales = []) {
+function CookieStand(id, location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPerSale) {
     this.id = id;
     this.location = location;
     this.minCustomersPerHour = minCustomersPerHour;
     this.maxCustomersPerHour = maxCustomersPerHour;
     this.avgCookiesPerSale = avgCookiesPerSale;
-    this.cookieSales = cookieSales;
+    this.cookieSales = [];
     this.storeTotal = 0;
 };
 
@@ -53,6 +53,7 @@ for (let i = 0; i < timeSlots.length -1; i++) {
 }
 this.cookieSales.push(this.storeTotal);
 };
+
 // render
 CookieStand.prototype.render = function() {
     const salesRow = document.createElement('tr');
@@ -110,4 +111,41 @@ for (let i = 0; i < allStands.length; i++) {
     allStands[i].simulateCookieSales();
     allStands[i].render();
 };
-renderFooterRow();
+
+
+
+
+const myForm = document.getElementById('new-store-form')
+
+myForm.addEventListener("submit", submitHandler)
+
+
+function submitHandler(event) {
+    event.preventDefault();
+
+    let id = event.target.storeName.value;
+    let minCustomers = event.target.minCustomers.value;
+    let maxCustomers = event.target.maxCustomers.value;
+    let avgCookies = event.target.avgCookies.value;
+    let name = id + ' Stand'
+    let newStand = new CookieStand (id, name, minCustomers, maxCustomers, avgCookies);
+    allStands.push(newStand);
+    const tableElem = document.getElementById('table');
+    tableElem.innerHTML = "";
+    renderHeaderRow();
+    newStand.calcCookiesEachHour();
+    newStand.simulateCookieSales();
+
+    for (let i = 0; i < allStands.length; i++) {
+        allStands[i].render();
+    }
+
+    renderFooterRow();
+    
+}
+// console.log(event.target.storeName.value);
+    // console.log(event.target.minCustomers.value);
+    // console.log(event.target.maxCustomers.value);
+    // console.log(event.target.avgCookies.value);
+
+    // console.log(parseInt(event.target.minCustomers.value) + parseInt(event.target.maxCustomers.value));
