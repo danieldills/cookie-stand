@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="sales">
 <head>
     <title>Sales Data: Pat's Salmon Cookies</title>
     
@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Pat's Salmon Cookies: Sales Data</h1>
-    <a href="index.html">Sales</a>
+    <a href="index.html">Home</a>
     <table id="table">
     <ul id="seattle"></ul>
     <ul id="tokyo"></ul>
@@ -16,9 +16,7 @@
     <ul id="lima"></ul>
     <ul id="total"></ul>
     </table>
-    
 <section>
-    <!-- <button id="click-me">Click Me</button> -->
 
     <form id="new-store-form" action=''>
 
@@ -36,7 +34,7 @@
             <input type="number" id="max-input" name="maxCustomers" required />
 
             <label for="avg-input">Average Cookies Per Sale:</label>
-            <input type="number" id="avg-input" name="avgCookies" required />
+            <input type="number" id="avg-input" name="avgCookies" required step="0.01" />
 
             <button type="submit">SUBMIT</button>
 

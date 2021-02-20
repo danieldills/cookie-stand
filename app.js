@@ -112,7 +112,7 @@ for (let i = 0; i < allStands.length; i++) {
     allStands[i].render();
 };
 
-
+renderFooterRow();
 
 
 const myForm = document.getElementById('new-store-form')
@@ -141,11 +141,4 @@ function submitHandler(event) {
     }
 
     renderFooterRow();
-    
 }
-// console.log(event.target.storeName.value);
-    // console.log(event.target.minCustomers.value);
-    // console.log(event.target.maxCustomers.value);
-    // console.log(event.target.avgCookies.value);
-
-    // console.log(parseInt(event.target.minCustomers.value) + parseInt(event.target.maxCustomers.value));
